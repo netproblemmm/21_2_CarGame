@@ -7,14 +7,15 @@ namespace Profile
     {
         public readonly SubscriptionProperty<GameState> State;
         public readonly CarModel CarModel;
+        //private CarType CarType;
 
-        public ProfilePlayer(GameState state, float speed)
+        public ProfilePlayer(GameState state, CarModel carModel, float speed)
         {
             State = new SubscriptionProperty<GameState>
             {
                 Value = state
             };
-            CarModel = new CarModel(5);
+            CarModel = new CarModel(speed, carModel.CarType);
         }
 
     }

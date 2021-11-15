@@ -11,9 +11,9 @@ internal class MainController: BaseController
     private MainMenuController _mainMenuController;
     private GameController _gameController;
 
-    public MainController(Transform placeForUi, ProfilePlayer profilePlayer)
+    public MainController(Transform placeForUI, ProfilePlayer profilePlayer)
     {
-        _placeForUI = placeForUi;
+        _placeForUI = placeForUI;
         _profilePlayer = profilePlayer;
 
         profilePlayer.State.SubscribeOnChange(OnChangeGameState);
