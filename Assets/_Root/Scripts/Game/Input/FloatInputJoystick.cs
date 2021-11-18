@@ -24,7 +24,6 @@ namespace Game.InputLogic
         private void OnDestroy() =>
             UpdateManager.UnsubscribeFromUpdate(Move);
 
-
         public void OnPointerDown(PointerEventData eventData)
         {
             _joystick.transform.position = eventData.position;

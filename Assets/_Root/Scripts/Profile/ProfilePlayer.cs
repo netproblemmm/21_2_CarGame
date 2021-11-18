@@ -7,7 +7,6 @@ namespace Profile
     {
         public readonly SubscriptionProperty<GameState> State;
         public readonly CarModel CarModel;
-        //private CarType CarType;
 
         public ProfilePlayer(GameState state, CarModel carModel, float speed)
         {
@@ -17,7 +16,6 @@ namespace Profile
             };
             CarModel = new CarModel(speed, carModel.CarType);
         }
-
     }
 }
 

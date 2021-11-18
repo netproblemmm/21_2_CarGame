@@ -10,7 +10,6 @@ internal class EntryPoint : MonoBehaviour
     [SerializeField] private Transform _placeForUI;
     private MainController _mainController;
 
-
     private void Awake()
     {
         var profilePlayer = new ProfilePlayer(InitialGameState, _carModel, _carSpeed);
