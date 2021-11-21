@@ -28,9 +28,9 @@ namespace UI
         }
 
         private void StartGame() =>
-            _profilePlayer.State.Value = GameState.Game;
+            _profilePlayer.CurrentState.Value = GameState.Game;
 
         private void Settings() =>
-            _profilePlayer.State.Value = GameState.Settings;
+            _profilePlayer.CurrentState.Value = GameState.Settings;
     }
 }
