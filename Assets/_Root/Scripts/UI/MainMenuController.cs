@@ -15,8 +15,11 @@ namespace UI
         {
             _profilePlayer = profilePlayer;
             _view = LoadView(placeForUI);
-            _view.Init(StartGame, Settings);
+            _view.Init(StartGame, Settings, Inventory);
         }
+
+        private void Inventory() =>
+            _profilePlayer.CurrentState.Value = GameState.Inventory;
 
         private MainMenuView LoadView(Transform placeForUI)
         {

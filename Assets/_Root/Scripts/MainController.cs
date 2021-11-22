@@ -1,3 +1,4 @@
+using Features.Inventory;
 using Game;
 using Profile;
 using UI;
@@ -9,6 +10,7 @@ internal class MainController: BaseController
     private readonly ProfilePlayer _profilePlayer;
 
     private MainMenuController _mainMenuController;
+    private InventoryController _inventoryController;
     private SettingsMenuController _settingsMenuController;
     private GameController _gameController;
 
@@ -26,6 +28,7 @@ internal class MainController: BaseController
         _mainMenuController?.Dispose();
         _settingsMenuController?.Dispose();
         _gameController?.Dispose();
+        _inventoryController.Dispose();
         _profilePlayer.CurrentState.UnSubscribeOnChange(OnChangeGameState);
     }
 
@@ -36,20 +39,30 @@ internal class MainController: BaseController
             case GameState.Start:
                 _mainMenuController = new MainMenuController(_placeForUI, _profilePlayer);
                 _settingsMenuController?.Dispose();
+                _inventoryController.Dispose();
                 _gameController?.Dispose();
                 break;
             case GameState.Settings:
                 _settingsMenuController = new SettingsMenuController(_placeForUI, _profilePlayer);
                 _mainMenuController?.Dispose();
+                _inventoryController.Dispose();
                 _gameController?.Dispose();
                 break;
             case GameState.Game:
                 _gameController = new GameController(_profilePlayer);
                 _settingsMenuController?.Dispose();
+                _inventoryController.Dispose();
+                _mainMenuController?.Dispose();
+                break;
+            case GameState.Inventory:
+                _inventoryController = new InventoryController(_placeForUI, _profilePlayer.InventoryModel);
+                _settingsMenuController?.Dispose();
+                _gameController?.Dispose();
                 _mainMenuController?.Dispose();
                 break;
             default:
                 _mainMenuController?.Dispose();
+                _inventoryController.Dispose();
                 _settingsMenuController?.Dispose();
                 _gameController?.Dispose();
                 break;
