@@ -17,6 +17,11 @@ namespace Tools
             }
         }
 
+
+        public SubscriptionProperty() {}
+        public SubscriptionProperty(TValue value) => _value = value;
+
+
         public void SubscribeOnChange(Action<TValue> subscriptionAction) =>
             _onChangeValue += subscriptionAction;
 

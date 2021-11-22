@@ -28,6 +28,6 @@ namespace UI
         }
 
         private void Back() =>
-            _profilePlayer.State.Value = GameState.Start;
+            _profilePlayer.CurrentState.Value = GameState.Start;
     }
 }

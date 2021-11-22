@@ -1,7 +1,7 @@
 using Tools;
 using UnityEngine;
 
-namespace Game.Background
+namespace Game.TapeBackground
 {
     internal class TapeBackgroundController : BaseController
     {

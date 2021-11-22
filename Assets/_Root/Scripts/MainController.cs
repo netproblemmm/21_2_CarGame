@@ -17,8 +17,8 @@ internal class MainController: BaseController
         _placeForUI = placeForUI;
         _profilePlayer = profilePlayer;
 
-        profilePlayer.State.SubscribeOnChange(OnChangeGameState);
-        OnChangeGameState(_profilePlayer.State.Value);
+        profilePlayer.CurrentState.SubscribeOnChange(OnChangeGameState);
+        OnChangeGameState(_profilePlayer.CurrentState.Value);
     }
 
     protected override void OnDispose()
@@ -26,7 +26,7 @@ internal class MainController: BaseController
         _mainMenuController?.Dispose();
         _settingsMenuController?.Dispose();
         _gameController?.Dispose();
-        _profilePlayer.State.UnSubscribeOnChange(OnChangeGameState);
+        _profilePlayer.CurrentState.UnSubscribeOnChange(OnChangeGameState);
     }
 
     private void OnChangeGameState(GameState state)
