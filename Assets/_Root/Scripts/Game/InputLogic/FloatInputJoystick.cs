@@ -27,7 +27,7 @@ namespace Game.InputLogic
         public void OnPointerDown(PointerEventData eventData)
         {
             _joystick.transform.position = eventData.position;
-            //_joystick.SetStartPosition(eventData.position);
+            _joystick.SetStartPosition(eventData.position);
             _joystick.OnPointerDown(eventData);
             StartUsing();
         }
