@@ -36,7 +36,7 @@ namespace UnityStandardAssets.CrossPlatformInput
         }
 
 		public void SetStartPosition(Vector3 position)
-		{
+        {
 			m_StartPos = position;
 		}
 
