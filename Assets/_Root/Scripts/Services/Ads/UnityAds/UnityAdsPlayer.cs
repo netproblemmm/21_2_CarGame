@@ -15,15 +15,19 @@ namespace Services.Ads.UnityAds
         protected readonly string _id;
 
 
-        protected UnityAdsPlayer(string id) =>
+        protected UnityAdsPlayer(string id) 
+        {
             _id = id;
-
+            Advertisement.AddListener(this);
+        }
 
         public void Play()
         {
             Load();
             OnPlaying();
             Load();
+
+            Log("Play");
         }
 
         protected abstract void OnPlaying();

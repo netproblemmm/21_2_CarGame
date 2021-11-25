@@ -1,11 +1,14 @@
 using Tools;
 using System;
 using Profile;
+using Services;
+using UnityEngine;
 using Game.InputLogic;
 using Game.TapeBackground;
 using Game.Transport;
 using Game.Transport.Bus;
 using Game.Transport.Car;
+using Features.AbilitySystem;
 
 namespace Game
 {
@@ -18,9 +21,10 @@ namespace Game
         private readonly TapeBackgroundController _tapeBackgroundController;
         private readonly InputGameController _inputGameController;
         private readonly TransportController _transportController;
+        private readonly AbilitiesController _abilitiesController;
 
 
-        public GameController(ProfilePlayer profilePlayer)
+        public GameController(Transform placeForUI, ProfilePlayer profilePlayer)
         {
             _profilePlayer = profilePlayer;
             _leftMoveDiff = new SubscriptionProperty<float>();
@@ -29,6 +33,9 @@ namespace Game
             _tapeBackgroundController = CreateTapeBackground();
             _inputGameController = CreateInputGameController();
             _transportController = CreateTransportController();
+            _abilitiesController = CreateAbilitiesController(placeForUI);
+
+            ServiceLocator.Analytics.SendGameStarted();
         }
 
 
@@ -66,6 +73,14 @@ namespace Game
             AddController(transportController);
 
             return transportController;
+        }
+
+        private AbilitiesController CreateAbilitiesController(Transform placeForUI)
+        {
+            var abilitiesController = new AbilitiesController(placeForUI, _transportController);
+            AddController(abilitiesController);
+
+            return abilitiesController;
         }
     }
 }
