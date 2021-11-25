@@ -1,8 +1,8 @@
-using Features.Inventory;
+using UI;
 using Game;
 using Profile;
-using UI;
 using UnityEngine;
+using Features.Shed;
 
 internal class MainController: BaseController
 {
@@ -10,8 +10,8 @@ internal class MainController: BaseController
     private readonly ProfilePlayer _profilePlayer;
 
     private MainMenuController _mainMenuController;
-    private InventoryController _inventoryController;
     private SettingsMenuController _settingsMenuController;
+    private ShedController _shedController;
     private GameController _gameController;
 
     public MainController(Transform placeForUI, ProfilePlayer profilePlayer)
@@ -27,8 +27,8 @@ internal class MainController: BaseController
     {
         _mainMenuController?.Dispose();
         _settingsMenuController?.Dispose();
+        _shedController?.Dispose();
         _gameController?.Dispose();
-        _inventoryController.Dispose();
         _profilePlayer.CurrentState.UnSubscribeOnChange(OnChangeGameState);
     }
 
@@ -39,32 +39,32 @@ internal class MainController: BaseController
             case GameState.Start:
                 _mainMenuController = new MainMenuController(_placeForUI, _profilePlayer);
                 _settingsMenuController?.Dispose();
-                _inventoryController.Dispose();
+                _shedController?.Dispose();
                 _gameController?.Dispose();
                 break;
             case GameState.Settings:
                 _settingsMenuController = new SettingsMenuController(_placeForUI, _profilePlayer);
                 _mainMenuController?.Dispose();
-                _inventoryController.Dispose();
+                _shedController?.Dispose();
+                _gameController?.Dispose();
+                break;
+            case GameState.Shed:
+                _shedController = new ShedController(_placeForUI, _profilePlayer);
+                _mainMenuController?.Dispose();
+                _settingsMenuController?.Dispose();
                 _gameController?.Dispose();
                 break;
             case GameState.Game:
-                _gameController = new GameController(_profilePlayer);
+                _gameController = new GameController(_placeForUI, _profilePlayer);
                 _settingsMenuController?.Dispose();
-                _inventoryController.Dispose();
                 _mainMenuController?.Dispose();
-                break;
-            case GameState.Inventory:
-                _inventoryController = new InventoryController(_placeForUI, _profilePlayer.InventoryModel);
-                _settingsMenuController?.Dispose();
-                _gameController?.Dispose();
-                _mainMenuController?.Dispose();
+                _shedController?.Dispose();
                 break;
             default:
                 _mainMenuController?.Dispose();
-                _inventoryController.Dispose();
                 _settingsMenuController?.Dispose();
                 _gameController?.Dispose();
+                _shedController?.Dispose();
                 break;
         }
     }

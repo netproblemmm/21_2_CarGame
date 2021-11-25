@@ -50,10 +50,10 @@ namespace Features.Inventory
             return repository;
         }
 
-        private InventoryView LoadView(Transform placeForUi)
+        private InventoryView LoadView(Transform placeForUI)
         {
             GameObject prefab = ResourcesLoader.LoadPrefab(_viewPath);
-            GameObject objectView = Object.Instantiate(prefab, placeForUi);
+            GameObject objectView = Object.Instantiate(prefab, placeForUI);
             AddGameObject(objectView);
 
             return objectView.GetComponent<InventoryView>();

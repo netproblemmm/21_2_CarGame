@@ -1,22 +1,18 @@
 ﻿using Tools;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace Features.Inventory.Items
 {
     internal interface IItemView
     {
         void Init(IItem item, UnityAction clickAction);
-        void DeInit();
-
-        void Select();
-        void Unselect();
     }
 
-    internal class ItemView : MonoBehaviour
+    internal class ItemView : MonoBehaviour, IItemView
     {
-        [SerializeField] private Image _image;
+        [SerializeField] private Image _icon;
         [SerializeField] private CustomText _text;
         [SerializeField] private Button _button;
 
@@ -29,17 +25,17 @@ namespace Features.Inventory.Items
 
         public void Init(IItem item, UnityAction clickAction)
         {
-            _image.sprite = item.Info.Icon;
-            _text.Text = item.Info.Title;
             _itemId = item.Id;
+            _text.Text = item.Info.Title;
+            _icon.sprite = item.Info.Icon;
             _button.onClick.AddListener(clickAction);
         }
 
         public void DeInit()
         {
-            _image.sprite = null;
             _text.Text = string.Empty;
             _itemId = string.Empty;
+            _icon.sprite = null;
             _button.onClick.RemoveAllListeners();
         }
 

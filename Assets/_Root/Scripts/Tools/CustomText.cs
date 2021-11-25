@@ -1,14 +1,13 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Tools
 {
-    internal class CustomText : MonoBehaviour
+    public class CustomText : MonoBehaviour
     {
         [SerializeField] private Text _text;
-        [SerializeField] private TMP_Text _textMesh;
+        [SerializeField] private TextMeshProUGUI _textMeshProUgui;
 
         public string Text
         {
@@ -16,30 +15,49 @@ namespace Tools
             set => SetText(value);
         }
 
-        private void Awake()
+
+        private void OnValidate() => Initialize();
+        private void Start() => Initialize();
+
+
+        private void Initialize()
         {
-            _text ??= GetComponent<Text>();
-            _textMesh ??= GetComponent<TMP_Text>();
+            bool hasAnyTextComponent =
+                TryAttachTextComponent(ref _text) ||
+                TryAttachTextComponent(ref _textMeshProUgui);
+
+            if (!hasAnyTextComponent)
+                throw new UnityException("Can't attach any text component!");
         }
 
-        private string GetText()
+        private bool TryAttachTextComponent<TComponent>(ref TComponent component) where TComponent : Component
         {
-            if (_text != null)
-                return _text.text;
+            if (component != null)
+                return true;
 
-            if (_textMesh != null)
-                return _textMesh.text;
-
-            throw new ArgumentException();
+            return TryGetComponent(out component);
         }
 
-        private void SetText(string text)
+
+        public void SetText(string text)
         {
             if (_text != null)
                 _text.text = text;
 
-            if (_textMesh != null)
-                _textMesh.text = text;
+            else if (_textMeshProUgui != null)
+                _textMeshProUgui.text = text;
         }
+
+        public string GetText()
+        {
+            if (_text != null)
+                return _text.text;
+
+            if (_textMeshProUgui != null)
+                return _textMeshProUgui.text;
+
+            return string.Empty;
+        }
+
     }
 }

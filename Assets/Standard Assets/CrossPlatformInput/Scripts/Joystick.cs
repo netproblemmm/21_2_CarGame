@@ -35,11 +35,6 @@ namespace UnityStandardAssets.CrossPlatformInput
             m_StartPos = transform.position;
         }
 
-        public void SetStartPosition(Vector3 position)
-        {
-	        m_StartPos = position;
-        }
-
 		void UpdateVirtualAxes(Vector3 value)
 		{
 			var delta = m_StartPos - value;
