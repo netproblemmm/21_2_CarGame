@@ -3,7 +3,7 @@ using Features.Inventory.Items;
 
 namespace Features.AbilitySystem.Abilities
 {
-    interface IAbilityItem
+    internal interface IAbilityItem
     {
         string Id { get; }
         Sprite Icon { get; }

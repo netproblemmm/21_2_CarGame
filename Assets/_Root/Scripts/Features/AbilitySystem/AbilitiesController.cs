@@ -11,52 +11,26 @@ namespace Features.AbilitySystem
 
     internal class AbilitiesController : BaseController
     {
-        private readonly ResourcePath _viewPath = new ResourcePath("Prefabs/Ability/AbilitiesView");
-        private readonly ResourcePath _dataSourcePath = new ResourcePath("Configs/Ability/AbilityItemConfigDataSource");
-
-        private readonly AbilitiesView _view;
-        private readonly AbilitiesRepository _repository;
+        private readonly IAbilitiesView _view;
+        private readonly IAbilitiesRepository _repository;
         private readonly IAbilityActivator _abilityActivator;
 
 
         public AbilitiesController(
-            [NotNull] Transform placeForUi,
-            [NotNull] IAbilityActivator abilityActivator)
+            [NotNull] IAbilityItem[] abilityItems,
+            [NotNull] IAbilityActivator abilityActivator,
+            [NotNull] IAbilitiesView abilitiesView,
+            [NotNull] IAbilitiesRepository abilitiesRepository)
         {
-            if (placeForUi == null)
-                throw new ArgumentNullException(nameof(placeForUi));
+            if (abilityItems == null)
+                throw new ArgumentNullException(nameof(abilityItems));
 
-            _abilityActivator
-                = abilityActivator ?? throw new ArgumentNullException(nameof(abilityActivator));
+            _abilityActivator = abilityActivator ?? throw new ArgumentNullException(nameof(abilityActivator));
+            _view = abilitiesView ?? throw new ArgumentNullException(nameof(abilitiesView));
+            _repository = abilitiesRepository ?? throw new ArgumentNullException(nameof(abilitiesRepository));
 
-            var abilityItemConfigs = LoadAbilityItemConfigs();
-            _repository = CreateRepository(abilityItemConfigs);
-            _view = LoadView(placeForUi);
-
-            _view.Display(abilityItemConfigs, OnAbilityViewClicked);
+            _view.Display(abilityItems, OnAbilityViewClicked);
         }
-
-
-        private AbilityItemConfig[] LoadAbilityItemConfigs() =>
-            ContentDataSourceLoader.LoadAbilityItemConfigs(_dataSourcePath);
-
-        private AbilitiesRepository CreateRepository(AbilityItemConfig[] abilityItemConfigs)
-        {
-            var repository = new AbilitiesRepository(abilityItemConfigs);
-            AddRepository(repository);
-
-            return repository;
-        }
-
-        private AbilitiesView LoadView(Transform placeForUi)
-        {
-            GameObject prefab = ResourcesLoader.LoadPrefab(_viewPath);
-            GameObject objectView = UnityEngine.Object.Instantiate(prefab, placeForUi, false);
-            AddGameObject(objectView);
-
-            return objectView.GetComponent<AbilitiesView>();
-        }
-
 
         private void OnAbilityViewClicked(string abilityId)
         {

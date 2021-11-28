@@ -4,9 +4,9 @@ using UnityEngine;
 
 internal class EntryPoint : MonoBehaviour
 {
-    private const float SpeedCar = 15f;
-    private const GameState InitialState = GameState.Start;
-    private const TransportType TransportType = Game.TransportType.Bus;
+    [SerializeField] private float SpeedCar = 15f;
+    [SerializeField] private GameState InitialState = GameState.Start;
+    [SerializeField] private TransportType TransportType = Game.TransportType.Bus;
     
     [SerializeField] private Transform _placeForUI;
 
