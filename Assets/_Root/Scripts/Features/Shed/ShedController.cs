@@ -51,40 +51,6 @@ namespace Features.Shed
             return repository;
         }
 
-        private InventoryController CreateInventoryController(Transform placeForUI)
-        {
-            var inventoryView = LoadInventoryView(placeForUI);
-            var itemsRepository = CreateItemsRepository();
-            var inventoryModel = _profilePlayer.Inventory;
-
-            var inventoryController = new InventoryController(inventoryView, inventoryModel, itemsRepository);
-            AddController(inventoryController);
-
-            return inventoryController;
-        }
-
-        private IItemsRepository CreateItemsRepository()
-        {
-            ResourcePath path = new ResourcePath("Configs/Inventory/ItemConfigDataSource");
-
-            ItemConfig[] itemConfigs = ContentDataSourceLoader.LoadItemConfigs(path);
-            var repository = new ItemsRepository(itemConfigs);
-            AddRepository(repository);
-
-            return repository;
-        }
-
-        private IInventoryView LoadInventoryView(Transform placeForUI)
-        {
-            ResourcePath path = new ResourcePath("Prefabs/Inventory/InventoryView");
-
-            GameObject prefab = ResourcesLoader.LoadPrefab(path);
-            GameObject objectView = UnityObject.Instantiate(prefab, placeForUI);
-            AddGameObject(objectView);
-
-            return objectView.GetComponent<InventoryView>();
-        }
-
         private ShedView LoadView(Transform placeForUI)
         {
             GameObject prefab = ResourcesLoader.LoadPrefab(_viewPath);
@@ -93,6 +59,42 @@ namespace Features.Shed
 
             return objectView.GetComponent<ShedView>();
         }
+        private InventoryController CreateInventoryController(Transform placeForUI)
+        {
+            IInventoryView inventoryView = LoadInventoryView(placeForUI);
+            IInventoryModel inventoryModel = _profilePlayer.Inventory;
+            IItemsRepository itemsRepository = CreateItemsRepository();
+
+            var inventoryController = new InventoryController(inventoryView, inventoryModel, itemsRepository);
+            AddController(inventoryController);
+
+            return inventoryController;
+        }
+
+        private IInventoryView LoadInventoryView(Transform placeForUI)
+        {
+            var path = new ResourcePath("Prefabs/Inventory/InventoryView");
+
+            GameObject prefab = ResourcesLoader.LoadPrefab(path);
+            GameObject objectView = UnityObject.Instantiate(prefab, placeForUI);
+            AddGameObject(objectView);
+
+            return objectView.GetComponent<InventoryView>();
+        }
+        private IItemsRepository CreateItemsRepository()
+        {
+            var path = new ResourcePath("Configs/Inventory/ItemConfigDataSource");
+
+            ItemConfig[] itemConfigs = ContentDataSourceLoader.LoadItemConfigs(path);
+            var repository = new ItemsRepository(itemConfigs);
+            AddRepository(repository);
+
+            return repository;
+        }
+
+
+
+
 
         private void Apply()
         {
@@ -102,13 +104,17 @@ namespace Features.Shed
                 _upgradeHandlersRepository.Items);
 
             _profilePlayer.CurrentState.Value = GameState.Start;
-            Log($"Apply. Current Speed: {_profilePlayer.CurrentTransport.Speed}");
+            Log("Apply. " +
+                $"Current Speed: {_profilePlayer.CurrentTransport.Speed}. " +
+                $"Current Jump Height: {_profilePlayer.CurrentTransport.JumpHeight}");
         }
 
         private void Back()
         {
             _profilePlayer.CurrentState.Value = GameState.Start;
-            Log($"Back. Current Speed: {_profilePlayer.CurrentTransport.Speed}");
+            Log("Back. " +
+                $"Current Speed: {_profilePlayer.CurrentTransport.Speed}. " +
+                $"Current Jump Height: {_profilePlayer.CurrentTransport.JumpHeight}");
         }
 
         private void UpgradeWithEquippedItems(
@@ -121,7 +127,7 @@ namespace Features.Shed
                     handler.Upgrade(upgradable);
         }
 
-        private new void Log(string message) =>
+        private void Log(string message) =>
             Debug.Log($"[{GetType().Name}] {message}");
     }
 }

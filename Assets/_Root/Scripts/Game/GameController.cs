@@ -10,6 +10,7 @@ using Game.Transport.Bus;
 using Game.Transport.Car;
 using Features.AbilitySystem;
 using Features.AbilitySystem.Abilities;
+using System.Collections.Generic;
 
 namespace Game
 {
@@ -22,7 +23,7 @@ namespace Game
         private readonly TapeBackgroundController _tapeBackgroundController;
         private readonly InputGameController _inputGameController;
         private readonly TransportController _transportController;
-        private readonly AbilitiesController _abilitiesController;
+        private readonly IAbilitiesController _abilitiesController;
 
 
         public GameController(Transform placeForUI, ProfilePlayer profilePlayer)
@@ -59,14 +60,15 @@ namespace Game
         private TransportController CreateTransportController()
         {
             TransportController transportController;
+            TransportModel transportModel = _profilePlayer.CurrentTransport;
 
             switch (_profilePlayer.CurrentTransport.Type)
             {
                 case TransportType.Car:
-                    transportController = new CarController();
+                    transportController = new CarController(transportModel);
                     break;
                 case TransportType.Bus:
-                    transportController = new BusController();
+                    transportController = new BusController(transportModel);
                     break;
                 default:
                     throw new ArgumentException(nameof(TransportType));
@@ -76,27 +78,25 @@ namespace Game
             return transportController;
         }
 
-        private AbilitiesController CreateAbilitiesController(Transform placeForUI)
+        private IAbilitiesController CreateAbilitiesController(Transform placeForUI)
         {
-            IAbilityItem[] abilityItems = LoadAbilityItemConfigs();
-            IAbilitiesView abilitiesView = LoadAbilitiesView(placeForUI);
-            IAbilitiesRepository abilitiesRepository = CreateAbilitiesRepository(abilityItems);
-            IAbilityActivator abilityActivator = _transportController;
+            AbilityItemConfig[] abilityItemConfigs = LoadAbilityItemConfigs();
+            var repository = CreateAbilitiesRepository(abilityItemConfigs);
+            var view = LoadAbilitiesView(placeForUI);
 
-            var abilitiesController = new AbilitiesController(abilityItems, abilityActivator, abilitiesView, abilitiesRepository);
-            
+            var abilitiesController = new AbilitiesController(view, repository, abilityItemConfigs, _transportController);
             AddController(abilitiesController);
             return abilitiesController;
         }
 
-        private IAbilityItem[] LoadAbilityItemConfigs()
+        private AbilityItemConfig[] LoadAbilityItemConfigs()
         {
-            ResourcePath path = new ResourcePath("Configs/Ability/AbilityItemConfigDataSource");
+            var path = new ResourcePath("Configs/Ability/AbilityItemConfigDataSource");
             return ContentDataSourceLoader.LoadAbilityItemConfigs(path);
         }
             
 
-        private IAbilitiesRepository CreateAbilitiesRepository(IAbilityItem[] abilityItemConfigs)
+        private IAbilitiesRepository CreateAbilitiesRepository(IEnumerable<IAbilityItem> abilityItemConfigs)
         {
             var repository = new AbilitiesRepository(abilityItemConfigs);
             AddRepository(repository);
@@ -106,7 +106,8 @@ namespace Game
 
         private IAbilitiesView LoadAbilitiesView(Transform placeForUi)
         {
-            ResourcePath path = new ResourcePath("Prefabs/Ability/AbilitiesView");
+            var path = new ResourcePath("Prefabs/Ability/AbilitiesView");
+
             GameObject prefab = ResourcesLoader.LoadPrefab(path);
             GameObject objectView = UnityEngine.Object.Instantiate(prefab, placeForUi, false);
             AddGameObject(objectView);
