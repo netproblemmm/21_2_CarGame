@@ -6,6 +6,8 @@ using UnityEngine;
 using Features.Inventory;
 using Features.Shed.Upgrade;
 using JetBrains.Annotations;
+using Features.Inventory.Items;
+using UnityObject = UnityEngine.Object;
 
 namespace Features.Shed
 {
@@ -22,7 +24,6 @@ namespace Features.Shed
         private readonly ProfilePlayer _profilePlayer;
         private readonly InventoryController _inventoryController;
         private readonly UpgradeHandlersRepository _upgradeHandlersRepository;
-
 
         public ShedController(
             [NotNull] Transform placeForUI,
@@ -41,7 +42,6 @@ namespace Features.Shed
             _view.Init(Apply, Back);
         }
 
-
         private UpgradeHandlersRepository CreateRepository()
         {
             UpgradeItemConfig[] upgradeConfigs = ContentDataSourceLoader.LoadUpgradeItemConfigs(_dataSourcePath);
@@ -53,10 +53,36 @@ namespace Features.Shed
 
         private InventoryController CreateInventoryController(Transform placeForUI)
         {
-            var inventoryController = new InventoryController(placeForUI, _profilePlayer.Inventory);
+            var inventoryView = LoadInventoryView(placeForUI);
+            var itemsRepository = CreateItemsRepository();
+            var inventoryModel = _profilePlayer.Inventory;
+
+            var inventoryController = new InventoryController(inventoryView, inventoryModel, itemsRepository);
             AddController(inventoryController);
 
             return inventoryController;
+        }
+
+        private IItemsRepository CreateItemsRepository()
+        {
+            ResourcePath path = new ResourcePath("Configs/Inventory/ItemConfigDataSource");
+
+            ItemConfig[] itemConfigs = ContentDataSourceLoader.LoadItemConfigs(path);
+            var repository = new ItemsRepository(itemConfigs);
+            AddRepository(repository);
+
+            return repository;
+        }
+
+        private IInventoryView LoadInventoryView(Transform placeForUI)
+        {
+            ResourcePath path = new ResourcePath("Prefabs/Inventory/InventoryView");
+
+            GameObject prefab = ResourcesLoader.LoadPrefab(path);
+            GameObject objectView = UnityObject.Instantiate(prefab, placeForUI);
+            AddGameObject(objectView);
+
+            return objectView.GetComponent<InventoryView>();
         }
 
         private ShedView LoadView(Transform placeForUI)
@@ -67,7 +93,6 @@ namespace Features.Shed
 
             return objectView.GetComponent<ShedView>();
         }
-
 
         private void Apply()
         {
@@ -86,7 +111,6 @@ namespace Features.Shed
             Log($"Back. Current Speed: {_profilePlayer.CurrentTransport.Speed}");
         }
 
-
         private void UpgradeWithEquippedItems(
             IUpgradable upgradable,
             IReadOnlyList<string> equippedItems,
@@ -97,7 +121,7 @@ namespace Features.Shed
                     handler.Upgrade(upgradable);
         }
 
-        private void Log(string message) =>
+        private new void Log(string message) =>
             Debug.Log($"[{GetType().Name}] {message}");
     }
 }

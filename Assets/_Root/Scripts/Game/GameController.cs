@@ -9,6 +9,7 @@ using Game.Transport;
 using Game.Transport.Bus;
 using Game.Transport.Car;
 using Features.AbilitySystem;
+using Features.AbilitySystem.Abilities;
 
 namespace Game
 {
@@ -77,10 +78,40 @@ namespace Game
 
         private AbilitiesController CreateAbilitiesController(Transform placeForUI)
         {
-            var abilitiesController = new AbilitiesController(placeForUI, _transportController);
-            AddController(abilitiesController);
+            IAbilityItem[] abilityItems = LoadAbilityItemConfigs();
+            IAbilitiesView abilitiesView = LoadAbilitiesView(placeForUI);
+            IAbilitiesRepository abilitiesRepository = CreateAbilitiesRepository(abilityItems);
+            IAbilityActivator abilityActivator = _transportController;
 
+            var abilitiesController = new AbilitiesController(abilityItems, abilityActivator, abilitiesView, abilitiesRepository);
+            
+            AddController(abilitiesController);
             return abilitiesController;
+        }
+
+        private IAbilityItem[] LoadAbilityItemConfigs()
+        {
+            ResourcePath path = new ResourcePath("Configs/Ability/AbilityItemConfigDataSource");
+            return ContentDataSourceLoader.LoadAbilityItemConfigs(path);
+        }
+            
+
+        private IAbilitiesRepository CreateAbilitiesRepository(IAbilityItem[] abilityItemConfigs)
+        {
+            var repository = new AbilitiesRepository(abilityItemConfigs);
+            AddRepository(repository);
+
+            return repository;
+        }
+
+        private IAbilitiesView LoadAbilitiesView(Transform placeForUi)
+        {
+            ResourcePath path = new ResourcePath("Prefabs/Ability/AbilitiesView");
+            GameObject prefab = ResourcesLoader.LoadPrefab(path);
+            GameObject objectView = UnityEngine.Object.Instantiate(prefab, placeForUi, false);
+            AddGameObject(objectView);
+
+            return objectView.GetComponent<AbilitiesView>();
         }
     }
 }

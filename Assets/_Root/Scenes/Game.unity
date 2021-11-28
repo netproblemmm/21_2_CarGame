@@ -482,6 +482,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209692cb916c6cd48aaecd51d29d5913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpeedCar: 15
+  InitialState: 1
+  TransportType: 1
   _placeForUI: {fileID: 1761341440}
 --- !u!114 &1938499770
 MonoBehaviour:
