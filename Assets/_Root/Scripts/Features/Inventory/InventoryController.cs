@@ -1,10 +1,6 @@
-using Tools;
 using System;
-using UnityEngine;
 using JetBrains.Annotations;
 using Features.Inventory.Items;
-using Object = UnityEngine.Object;
-using System.Collections.Generic;
 
 namespace Features.Inventory
 {
@@ -21,20 +17,22 @@ namespace Features.Inventory
         public InventoryController(
             [NotNull] IInventoryView inventoryView,
             [NotNull] IInventoryModel inventoryModel,
-            [NotNull] IItemsRepository inventoryRepository)
+            [NotNull] IItemsRepository itemsRepository)
         {
             _view = inventoryView ?? throw new ArgumentNullException(nameof(inventoryView));
             _model = inventoryModel ?? throw new ArgumentNullException(nameof(inventoryModel));
-            _repository = inventoryRepository ?? throw new ArgumentNullException(nameof(inventoryRepository));
+            _repository = itemsRepository ?? throw new ArgumentNullException(nameof(itemsRepository));
 
             _view.Display(_repository.Items.Values, OnItemClicked);
-            InitSelectedItems(_model.EquippedItems);
+
+            foreach (string itemId in _model.EquippedItems)
+                _view.Select(itemId);
         }
 
-        private void InitSelectedItems(IEnumerable<string> selectedItemIds)
+        protected override void OnDispose()
         {
-            foreach (string itemId in selectedItemIds)
-                _view.Select(itemId);
+            _view.Clear();
+            base.OnDispose();
         }
 
         private void OnItemClicked(string itemId)

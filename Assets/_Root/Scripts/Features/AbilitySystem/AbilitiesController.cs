@@ -1,6 +1,5 @@
-using Tools;
 using System;
-using UnityEngine;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Features.AbilitySystem.Abilities;
 
@@ -9,7 +8,7 @@ namespace Features.AbilitySystem
     internal interface IAbilitiesController
     { }
 
-    internal class AbilitiesController : BaseController
+    internal class AbilitiesController : BaseController, IAbilitiesController
     {
         private readonly IAbilitiesView _view;
         private readonly IAbilitiesRepository _repository;
@@ -17,10 +16,10 @@ namespace Features.AbilitySystem
 
 
         public AbilitiesController(
-            [NotNull] IAbilityItem[] abilityItems,
-            [NotNull] IAbilityActivator abilityActivator,
             [NotNull] IAbilitiesView abilitiesView,
-            [NotNull] IAbilitiesRepository abilitiesRepository)
+            [NotNull] IAbilitiesRepository abilitiesRepository,
+            [NotNull] IEnumerable<IAbilityItem> abilityItems,
+            [NotNull] IAbilityActivator abilityActivator)
         {
             if (abilityItems == null)
                 throw new ArgumentNullException(nameof(abilityItems));
@@ -30,6 +29,12 @@ namespace Features.AbilitySystem
             _repository = abilitiesRepository ?? throw new ArgumentNullException(nameof(abilitiesRepository));
 
             _view.Display(abilityItems, OnAbilityViewClicked);
+        }
+
+        protected override void OnDispose()
+        {
+            _view.Clear();
+            base.OnDispose();
         }
 
         private void OnAbilityViewClicked(string abilityId)

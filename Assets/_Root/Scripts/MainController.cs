@@ -25,42 +25,37 @@ internal class MainController: BaseController
 
     protected override void OnDispose()
     {
-        DisposeAllControllers();
+        DisposeControllers();
         _profilePlayer.CurrentState.UnSubscribeOnChange(OnChangeGameState);
     }
 
     private void OnChangeGameState(GameState state)
     {
+        DisposeControllers();
+
         switch (state)
         {
             case GameState.Start:
-                DisposeAllControllers();
                 _mainMenuController = new MainMenuController(_placeForUI, _profilePlayer);
                 break;
             case GameState.Settings:
-                DisposeAllControllers();
                 _settingsMenuController = new SettingsMenuController(_placeForUI, _profilePlayer);
                 break;
             case GameState.Shed:
-                DisposeAllControllers();
                 _shedController = new ShedController(_placeForUI, _profilePlayer);
                 break;
             case GameState.Game:
-                DisposeAllControllers();
                 _gameController = new GameController(_placeForUI, _profilePlayer);
-                break;
-            default:
-                DisposeAllControllers();
                 break;
         }
     }
 
-    private void DisposeAllControllers()
+    private void DisposeControllers()
     {
         _mainMenuController?.Dispose();
         _settingsMenuController?.Dispose();
-        _gameController?.Dispose();
         _shedController?.Dispose();
+        _gameController?.Dispose();
     }
 }
 

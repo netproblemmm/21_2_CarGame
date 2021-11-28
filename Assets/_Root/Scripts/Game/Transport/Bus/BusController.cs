@@ -11,10 +11,8 @@ namespace Game.Transport.Bus
         public override GameObject ViewGameObject => _view.gameObject;
 
 
-        public BusController()
-        {
+        public BusController(TransportModel model) : base(model) =>
             _view = LoadView();
-        }
 
         private BusView LoadView()
         {
