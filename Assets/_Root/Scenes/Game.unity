@@ -482,10 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209692cb916c6cd48aaecd51d29d5913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedCar: 15
-  _jumpHeightCar: 2
-  _initialState: 1
-  _transportType: 1
+  _initialProfilePlayer: {fileID: 11400000, guid: 82e289a9855c9194daf0e713539df4da, type: 2}
   _placeForUI: {fileID: 1761341440}
 --- !u!114 &1938499770
 MonoBehaviour:
