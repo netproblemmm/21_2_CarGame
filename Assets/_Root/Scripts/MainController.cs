@@ -5,6 +5,8 @@ using Profile;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Features.Fight;
+using Features.Rewards;
 using Features.Shed;
 using Features.Shed.Upgrade;
 using Features.Inventory;
@@ -22,7 +24,10 @@ internal class MainController: BaseController
     private MainMenuController _mainMenuController;
     private SettingsMenuController _settingsMenuController;
     private ShedController _shedController;
+    private RewardController _rewardController;
+    private StartFightController _startFightController;
     private GameController _gameController;
+    private FightController _fightController;
 
     public MainController(Transform placeForUI, ProfilePlayer profilePlayer)
     {
@@ -56,8 +61,15 @@ internal class MainController: BaseController
             case GameState.Shed:
                 _shedController = CreateShedController(_placeForUI);
                 break;
+            case GameState.DailyReward:
+                _rewardController = new RewardController(_placeForUI, _profilePlayer);
+                break;
             case GameState.Game:
                 _gameController = new GameController(_placeForUI, _profilePlayer);
+                _startFightController = new StartFightController(_placeForUI, _profilePlayer);
+                break;
+            case GameState.Fight:
+                _fightController = new FightController(_placeForUI, _profilePlayer);
                 break;
         }
     }
@@ -67,7 +79,10 @@ internal class MainController: BaseController
         _mainMenuController?.Dispose();
         _settingsMenuController?.Dispose();
         _shedController?.Dispose();
+        _rewardController?.Dispose();
+        _startFightController?.Dispose();
         _gameController?.Dispose();
+        _fightController?.Dispose();
     }
 
     private void DisposeSubInstances()
