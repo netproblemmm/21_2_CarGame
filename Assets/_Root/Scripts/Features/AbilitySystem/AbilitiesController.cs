@@ -21,12 +21,17 @@ namespace Features.AbilitySystem
             [NotNull] IEnumerable<IAbilityItem> abilityItems,
             [NotNull] IAbilityActivator abilityActivator)
         {
+            _view
+                = abilitiesView ?? throw new ArgumentNullException(nameof(abilitiesView));
+
+            _repository
+                = abilitiesRepository ?? throw new ArgumentNullException(nameof(abilitiesRepository));
+
+            _abilityActivator
+                = abilityActivator ?? throw new ArgumentNullException(nameof(abilityActivator));
+
             if (abilityItems == null)
                 throw new ArgumentNullException(nameof(abilityItems));
-
-            _abilityActivator = abilityActivator ?? throw new ArgumentNullException(nameof(abilityActivator));
-            _view = abilitiesView ?? throw new ArgumentNullException(nameof(abilitiesView));
-            _repository = abilitiesRepository ?? throw new ArgumentNullException(nameof(abilitiesRepository));
 
             _view.Display(abilityItems, OnAbilityViewClicked);
         }
