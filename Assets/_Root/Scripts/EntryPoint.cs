@@ -22,7 +22,6 @@ internal class EntryPoint : MonoBehaviour
         _mainController.Dispose();
     }
 
-
     private ProfilePlayer CreateProfilePlayer(InitialProfilePlayer initialProfilePlayer) =>
         new ProfilePlayer
         (

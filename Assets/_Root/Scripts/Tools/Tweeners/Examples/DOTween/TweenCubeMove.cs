@@ -1,14 +1,13 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Tweeners.Scripts.Examples.DOTween
+namespace Tools.Tweeners.Examples.DOTween
 {
     public class TweenCubeMove : MonoBehaviour
     {
         [SerializeField] private bool _reverse;
         [SerializeField] private float _duration;
         [SerializeField] private Vector3 _endPosition;
-
 
         [ContextMenu(nameof(Play))]
         public void Play()

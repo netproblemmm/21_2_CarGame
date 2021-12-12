@@ -1,14 +1,13 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Tweeners.Scripts.Examples.DOTween
+namespace Tools.Tweeners.Examples.DOTween
 {
     public class TweenCubePath : MonoBehaviour
     {
         [SerializeField] private float _duration;
         [SerializeField] private PathType _pathType = PathType.Linear;
         [SerializeField] private Transform[] _points;
-
 
         [ContextMenu(nameof(Play))]
         public void Play()

@@ -1,14 +1,13 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Tweeners.Scripts.Examples.DOTween
+namespace Tools.Tweeners.Examples.DOTween
 {
     [RequireComponent(typeof(Renderer))]
     public class TweenCubeColor : MonoBehaviour
     {
         [SerializeField] private float _duration;
         [SerializeField] private Color _endColor;
-
 
         [ContextMenu(nameof(Play))]
         public void Play()

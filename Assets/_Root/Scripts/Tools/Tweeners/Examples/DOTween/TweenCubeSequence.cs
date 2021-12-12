@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Tweeners.Scripts.Examples.DOTween
+namespace Tools.Tweeners.Examples.DOTween
 {
     public class TweenCubeSequence : MonoBehaviour
     {
@@ -21,7 +21,6 @@ namespace Tweeners.Scripts.Examples.DOTween
         [SerializeField] private Vector3 _jumpPosition;
         [SerializeField] private float _jumpPower;
         [SerializeField] private int _jumpCount;
-
 
         [ContextMenu(nameof(Play))]
         public void Play()
