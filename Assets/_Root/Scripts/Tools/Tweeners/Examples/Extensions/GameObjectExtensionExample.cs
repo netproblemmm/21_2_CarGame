@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Tweeners.Scripts.Examples.Extensions
+namespace Tools.Tweeners.Examples.Extensions
 {
     public class GameObjectExtensionExample : MonoBehaviour
     {
@@ -11,7 +11,6 @@ namespace Tweeners.Scripts.Examples.Extensions
         [SerializeField] private float _duration;
         [SerializeField] private Transform _startPoint;
         [SerializeField] private Transform _endPoint;
-
 
         [ContextMenu(nameof(Play))]
         public void Play()

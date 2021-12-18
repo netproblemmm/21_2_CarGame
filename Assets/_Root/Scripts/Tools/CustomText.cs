@@ -15,10 +15,8 @@ namespace Tools
             set => SetText(value);
         }
 
-
         private void OnValidate() => Initialize();
         private void Start() => Initialize();
-
 
         private void Initialize()
         {
@@ -37,7 +35,6 @@ namespace Tools
 
             return TryGetComponent(out component);
         }
-
 
         public void SetText(string text)
         {
@@ -58,6 +55,5 @@ namespace Tools
 
             return string.Empty;
         }
-
     }
 }

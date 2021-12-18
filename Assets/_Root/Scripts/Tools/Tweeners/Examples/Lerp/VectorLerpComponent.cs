@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Tweeners.Scripts.Examples
+namespace Tools.Tweeners.Examples
 {
     public enum RatioType
     {
@@ -10,7 +10,7 @@ namespace Tweeners.Scripts.Examples
         Root
     }
 
-    public class VectorLerpComponent : MonoBehaviour
+    internal class VectorLerpComponent : MonoBehaviour
     {
         [SerializeField] private RatioType _ratioType;
         [SerializeField] private float _duration;
@@ -18,7 +18,6 @@ namespace Tweeners.Scripts.Examples
         [SerializeField] private Transform _endPoint;
 
         private Coroutine _coroutine;
-
 
         public void Play(Vector3 startPosition, Vector3 endPosition, float duration)
         {

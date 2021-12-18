@@ -1,6 +1,6 @@
-namespace _Tween.Scripts
+namespace Tools.Tweeners
 {
-    public enum AnimationButtonType
+    internal enum AnimationButtonType
     {
         None,
         ChangeRotation,

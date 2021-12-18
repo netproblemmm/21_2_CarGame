@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Tweeners.Scripts.Examples.Extensions
+namespace Tools.Tweeners.Examples
 {
-    public static class GameObjectExtensions
+    internal static class GameObjectExtensions
     {
         public static void Move(this GameObject go, Vector3 startPosition, Vector3 endPosition, float duration)
         {

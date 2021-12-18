@@ -1,9 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Tweeners.Scripts.Examples
+namespace Tools.Tweeners.Examples
 {
-    public class MathfLerpComponent : MonoBehaviour
+    internal class MathfLerpComponent : MonoBehaviour
     {
         private const float MinValue = 0;
         private const float MaxValue = 100;
