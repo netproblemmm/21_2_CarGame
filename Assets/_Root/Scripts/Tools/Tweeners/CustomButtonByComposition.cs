@@ -19,7 +19,7 @@ namespace _Tween.Scripts
         [SerializeField] private Ease _curveEase = Ease.Linear;
         [SerializeField] private float _duration = 0.6f;
         [SerializeField] private float _strength = 30f;
-
+        [SerializeField] private bool _isIndependentUpdate = true;
 
         private void OnValidate() => InitComponents();
         private void Awake() => InitComponents();
