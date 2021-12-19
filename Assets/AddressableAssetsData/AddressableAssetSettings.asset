@@ -13,24 +13,43 @@ MonoBehaviour:
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
   m_DefaultGroup: c73142910e688194db50a4c3eef0d4a6
+  m_CachedHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
+  m_CatalogRequestsTimeout: 0
   m_DisableCatalogUpdateOnStart: 0
   m_IgnoreUnsupportedFilesInBuild: 0
   m_UniqueBundleIds: 0
+  m_NonRecursiveBuilding: 1
+  m_CCDEnabled: 0
   m_maxConcurrentWebRequests: 500
   m_ContiguousBundles: 0
+  m_StripUnityVersionFromBundleBuild: 0
+  m_DisableVisibleSubAssetRepresentations: 0
+  m_ShaderBundleNaming: 0
+  m_ShaderBundleCustomNaming: 
+  m_MonoScriptBundleNaming: 0
+  m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
     m_Id: 5d6171bd73b8d334d80df88d4eb5f74c
   m_RemoteCatalogLoadPath:
     m_Id: ca02f1f3660af7f4488cdc3de18aa533
+  m_ContentStateBuildPath: 
+  m_BuildAddressablesWithPlayerBuild: 2
   m_overridePlayerVersion: 
   m_GroupAssets:
   - {fileID: 11400000, guid: 98cd5096d11ae0847b752b88fed30665, type: 2}
   - {fileID: 11400000, guid: bf7eda94746241f46b8966d365a2f530, type: 2}
   - {fileID: 11400000, guid: f49b1b7c654d1f84ba19555e05bb3004, type: 2}
   - {fileID: 11400000, guid: 2da7d5ce7af1b264ca12ea91e46debe9, type: 2}
+  - {fileID: 11400000, guid: 748c1514839238f49b7d830522ef9b54, type: 2}
+  - {fileID: 11400000, guid: ab613b4ca9e85b345b2a17a6f331a7dc, type: 2}
+  - {fileID: 11400000, guid: 10a4ec08f0122da43970fedb07ae974b, type: 2}
+  - {fileID: 11400000, guid: e16a28cc7b9780f4280c0ae4581ab224, type: 2}
+  - {fileID: 11400000, guid: e1d0ae07f51396842a0fb68a4b9bac94, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -72,6 +91,11 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - Locale
+    - Locale-en
+    - Preload
+    - Locale-fr
+    - Locale-ru
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: adb44cbc7a6206e44a66791d47fddf42, type: 2}
@@ -91,3 +115,10 @@ MonoBehaviour:
     m_Settings: {fileID: 11400000}
     m_NextInstanceId: 0
     m_RegisteredServiceTypeRefs: []
+    m_GlobalProfileVariablesInfos:
+    - key: PrivateIpAddress
+      value: 172.21.96.1
+    - key: PrivateIpAddress_1
+      value: 192.168.22.19
+    - key: PrivateIpAddress_2
+      value: 192.168.56.1
